@@ -39,9 +39,9 @@ local plugins = {
     end,
     keys = {
       { "<leader>a",
-      function ()
-        require("harpoon"):list():append()
-      end,
+        function ()
+          require("harpoon"):list():append()
+        end,
       desc = "Harpoon Add",
       },
       { "<leader>m",
@@ -89,6 +89,74 @@ local plugins = {
     init = function ()
      vim.g.rustfmt_autosave = 1
     end,
+  },
+  {
+    'saecki/crates.nvim',
+    ft = { "rust", "toml"},
+    tag = 'stable',
+    config = function(_, opts)
+      local crates = require("crates")
+      crates.setup(opts)
+      crates.show()
+    end,
+    keys = {
+      { "<leader>cu",
+        function ()
+          require("crates").update_all_crates()
+        end,
+        desc = "Cargo: Update all crates",
+      },
+      { "<leader>cU",
+        function ()
+          require("crates").update_all_crates()
+        end,
+        desc = "Cargo: Upgrade all crates",
+      },
+      { "<leader>cv",
+        function ()
+          require("crates").show_versions_popup()
+        end,
+        desc = "Cargo: Show versions popup",
+      },
+      { "<leader>cf",
+        function ()
+          require("crates").show_features_popup()
+        end,
+        desc = "Cargo: Show features popup",
+      },
+      { "<leader>cH",
+        function ()
+          require("crates").open_homepage()
+        end,
+        desc = "Cargo: Open homepage",
+      },
+      { "<leader>cR",
+        function ()
+          require("crates").open_repository()
+        end,
+        desc = "Cargo: Open repository",
+      },
+      { "<leader>cD",
+        function ()
+          require("crates").open_documentation()
+        end,
+        desc = "Cargo: Open documentation",
+      },
+      { "<leader>cC",
+        function ()
+          require("crates").open_crates_io()
+        end,
+        desc = "Cargo: Open crates io",
+      },
+    }
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    opts = function ()
+      local M = require("plugins.configs.cmp")
+      table.insert(M.sources, {name = "crates"})
+      return M
+    end
   }
 }
 
