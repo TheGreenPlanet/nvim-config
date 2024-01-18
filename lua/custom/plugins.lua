@@ -1,7 +1,10 @@
 local plugins = {
   {
     "jdhao/better-escape.vim",
-    lazy = false
+    lazy = false,
+    init = function ()
+      vim.g.better_escape_interval = 200
+    end
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
